@@ -1,0 +1,48 @@
+---
+heroImage: /src/assets/images/specificity1-660x359.png
+category: HTML/CSS
+description: Css priority order
+pubDate: 2024-07-19T17:00:00.000Z
+tags:
+  - css
+  - html
+title: Css priority order
+---
+
+CSS Priority Order là thứ tự ưu tiên của css áp dụng cho một phần tử HTML.
+
+Một phần tử HTML sẽ được đánh giá mức độ ưu tiên CSS dựa theo thang đo gồm 4 giá trị 0 0 0 0. Trong đó, giá trị bên trái có mức độ ưu tiên cao hơn giá trị bên phải.
+
+**Ví dụ:** phần tử A có giá trị 1 0 0 0 sẽ được ưu tiên hơn phần từ B có giá trị 0 0 0 1
+
+Giá trị trong thang đo này được xem xét theo 3 yếu tố và các yếu tố này có mức độ ưu tiên tăng dần
+
+1. **Thẻ HTML:** ví dụ h1, p, h2… và pseudo-element (ví dụ ::before)
+2. **Selectors:** Class selector (ví dụ .text-lg), attribute selector (ví dụ \[type=‘radio’]) và pseudo-classes (ví dụ \:hover) …
+3. **id selector**
+
+Ngoài ra, các ký hiệu (sign) như \~, combinator (+, ||, >) không ảnh hưởng đến độ ưu tiên CSS
+
+**Ví dụ:** _a \~ .class_ tương đương với _a .class_
+
+Các giá trị của thang đo được tăng dựa vào 4 quy tắc sau:
+
+**Quy tắc 1:** giá trị đầu tiên của chuỗi số từ phải qua trái đại diện cho element selector
+
+- Cứ có một element thì tăng lên 1 giá trị
+
+![](/src/assets/images/css-priority-order/Untitled.png)
+
+**Quy tắc 2:** giá trị thứ hai của chuỗi số được tăng khi xuất hiện: Class selector, pseudo-class, attribute selector
+
+![](</src/assets/images/css-priority-order/Untitled 1.png>)
+
+**Quy tắc 3:** giá trị thứ ba của chuỗi số được tăng khi xuất hiện: id class
+
+![](</src/assets/images/css-priority-order/Untitled 2.png>)
+
+**Quy tắc 4:** giá trị thứ tư được tăng khi xuất hiện inline style trong thẻ HTML.
+
+![](</src/assets/images/css-priority-order/Untitled 3.png>)
+
+**Quy tắc 5:** Thẻ HTML có chứa _!important_ thì sẽ có mức độ ưu tiên cao nhất
