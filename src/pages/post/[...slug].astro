@@ -61,11 +61,11 @@ const disqusEnabled = disqusConfig.enabled
 
 			<!-- related posts -->
 			<footer>
-				<h2 class='font-bold text-lg dark:text-white mb-6'>Related Posts</h2>
-				<ListRelatedPosts posts={relatedPosts} />
+				<!--<h2 class='font-bold text-lg dark:text-white mb-6'>Related Posts</h2>-->
+				<!--<ListRelatedPosts posts={relatedPosts} />-->
+				{disqusEnabled && <Disqus />}
 			</footer>
 		</article>
 	</div>
 
-	{disqusEnabled && <Disqus />}
 </BlogPost>

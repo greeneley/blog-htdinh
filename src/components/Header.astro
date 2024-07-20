@@ -34,22 +34,22 @@ const SOCIALNETWORKS = [
 			class='flex h-full flex-col justify-between gap-12 text-left md:flex-row md:w-full md:gap-5'
 		>
 			<div
-				class='flex flex-col gap-4 md:flex-row md:border-r-2 border-black pr-4 dark:border-white'
+				class='flex flex-col gap-1 md:flex-row md:border-r-2 border-black pr-4 dark:border-white'
 			>
 				<HeaderLink href='/tags' class='flex items-center gap-1 text-2xl md:text-base'>
 					<TagIcon /> Tags
 				</HeaderLink>
 			</div>
 
-			<div class='flex justify-center items-center md:justify-end gap-3 md:p-0'>
-				{
-					SOCIALNETWORKS.map((network) => (
-						<HeaderLink class='' href={network.url} target='_blank' aria-label={network.name}>
-							<span>{<network.icon />} </span>
-						</HeaderLink>
-					))
-				}
-			</div>
+			<!--<div class='flex justify-center items-center md:justify-end gap-3 md:p-0'>-->
+			<!--	{-->
+			<!--		SOCIALNETWORKS.map((network) => (-->
+			<!--			<HeaderLink class='' href={network.url} target='_blank' aria-label={network.name}>-->
+			<!--				<span>{<network.icon />} </span>-->
+			<!--			</HeaderLink>-->
+			<!--		))-->
+			<!--	}-->
+			<!--</div>-->
 		</nav>
 	</div>
 
