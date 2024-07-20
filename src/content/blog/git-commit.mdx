@@ -15,8 +15,8 @@ Ngày nay, hầu hết mọi dự án đều sử dụng Git để quản lý m�
 
 Mỗi khi chúng ta phát triển một tính năng mới hoặc sửa lỗi trong dự án, chúng ta luôn tạo commit và đẩy chúng lên các kho lưu trữ mã nguồn như Bitbucket, GitLab, GitHub và các nơi tương tự. Công việc này có vẻ đơn giản, nhưng khi dự án phức tạp hoặc có nhiều thành viên tham gia, nó có thể gây ra nhiều vấn đề:
 
-* Trong giai đoạn học đại học, chúng ta thường tham gia vào dự án với một số lượng thành viên nhỏ. Dự án thường được tạo ra để mục đích học tập nên số lượng commit và mã nguồn thường không quá lớn. Quản lý commit trong Git ở giai đoạn này khá đơn giản, và sinh viên thường không nhận thấy các vấn đề liên quan đến tổ chức commit.
-* Tuy nhiên, khi đi làm và tham gia vào các dự án lớn, có nhiều thành viên và dự án đã tồn tại từ lâu, số lượng commit có thể trở nên lớn đáng kể và ngày càng tăng. Khi đó, quản lý commit trở nên rất quan trọng.
+- Trong giai đoạn học đại học, chúng ta thường tham gia vào dự án với một số lượng thành viên nhỏ. Dự án thường được tạo ra để mục đích học tập nên số lượng commit và mã nguồn thường không quá lớn. Quản lý commit trong Git ở giai đoạn này khá đơn giản, và sinh viên thường không nhận thấy các vấn đề liên quan đến tổ chức commit.
+- Tuy nhiên, khi đi làm và tham gia vào các dự án lớn, có nhiều thành viên và dự án đã tồn tại từ lâu, số lượng commit có thể trở nên lớn đáng kể và ngày càng tăng. Khi đó, quản lý commit trở nên rất quan trọng.
 
 Tôi sẽ liệt kê một số vấn đề bạn có thể gặp phải nếu không có một phương pháp quản lý hiệu quả:
 
@@ -35,22 +35,22 @@ Chúng ta có 2 tấm hình như sau:
 
 Ở tấm hình thứ nhất:
 
-* Bạn có hiểu được các commit đó làm gì không ? Ví dụ commit `68abca0`: updates có tác dụng gì ?
+- Bạn có hiểu được các commit đó làm gì không ? Ví dụ commit `68abca0`: updates có tác dụng gì ?
 
 Ở tấm hình thứ hai:
 
-* Các message của commit có cấu trúc rõ ràng `<type>(scope): <description> (<issue_id>)`.
-* Chúng ta dễ dàng hiểu commit đó làm gì và theo dõi được issue mà nó sinh ra
+- Các message của commit có cấu trúc rõ ràng `<type>(scope): <description> (<issue_id>)`.
+- Chúng ta dễ dàng hiểu commit đó làm gì và theo dõi được issue mà nó sinh ra
 
 Thông qua 2 hình ảnh trên, rõ ràng hệ thống commit ở hình thứ hai rõ ràng và dễ hiểu hơn hình thứ nhất.
 
-*Nhắc lại:* commit message là một thông điệp tóm tắt những gì chúng ta làm và tại sao chúng ta thay đổi.
+_Nhắc lại:_ commit message là một thông điệp tóm tắt những gì chúng ta làm và tại sao chúng ta thay đổi.
 
 Một commit message được xem là rõ ràng, dễ hiểu và dễ tìm kiếm thì nên chứa 3 thông tin như sau:
 
-* Chúng ta thay đổi cái gì trong commit ? (What question)
-* Vì sao chúng ta thay đổi ? (Why question)
-* (Tùy chọn) commit này được sinh ra từ ticket hoặc issue nào ? (Where question)
+- Chúng ta thay đổi cái gì trong commit ? (What question)
+- Vì sao chúng ta thay đổi ? (Why question)
+- (Tùy chọn) commit này được sinh ra từ ticket hoặc issue nào ? (Where question)
 
 **Ví dụ:** Remove abc.tsx to reduce bad performance (#1234)
 
@@ -58,7 +58,7 @@ Hiện nay, một trong những quy tắc commit nổi tiếng được rất nh
 
 Một số dự án điển hình đang sử dụng bộ quy tắc ở trên như là:
 
-* [Semantic UI React](https://github.com/Semantic-Org/Semantic-UI-React)
+- [Semantic UI React](https://github.com/Semantic-Org/Semantic-UI-React)
 
 Bên cạnh bộ quy tắc này, một bộ quy tắc khác mà tôi đã được tham gia phát triển, cấu trúc message commit như sau:
 `<issue_id>: <description`
@@ -67,7 +67,7 @@ Bên cạnh bộ quy tắc này, một bộ quy tắc khác mà tôi đã đư�
 
 Một số dự án sử dụng quy tắc này như sau:
 
-* [Undersea](https://github.com/undertheseanlp/underthesea)
+- [Undersea](https://github.com/undertheseanlp/underthesea)
 
 Luôn nhớ đặt message cho commit một cách cẩn thận và khoa học.
 
@@ -91,17 +91,17 @@ Git bisect sẽ giúp bạn tìm kiếm chính xác commit gây ra lỗi bằng 
 
 Để sử dụng git bisect, có 4 thao tác căn bản bạn cần nhớ:
 
-* `git bisect start`: được sử dụng ở commit mới nhất hoặc commit mà có bug. Khi sử dụng lệnh này, commit này sẽ được xem là điểm bắt đầu tìm kiếm.
-* `git bisect good`: đánh dấu commit không có bug
-* `git bisect bad`: đánh dấu commit có bug
-* `git bisect reset`: thoát khỏi git bisect
+- `git bisect start`: được sử dụng ở commit mới nhất hoặc commit mà có bug. Khi sử dụng lệnh này, commit này sẽ được xem là điểm bắt đầu tìm kiếm.
+- `git bisect good`: đánh dấu commit không có bug
+- `git bisect bad`: đánh dấu commit có bug
+- `git bisect reset`: thoát khỏi git bisect
 
 Cách sử dụng của git bisect rất đơn giản:
 
-* Đầu tiên, bạn cần đảm bảo bạn đang ở commit mới nhất. Bạn vào git bisect thông qua lệnh: `git bisect start.`Tiếp theo, vì commit này bị lỗi, thao tác lệnh tiếp theo: `git bisect bad` . Lúc này, commit mới nhất này được đánh dấu là có bug. Commit này được gọi là start commit.
-* Tiếp theo, bạn hãy chọn một commit trong quá khứ (1 ngày, 10 ngày, 100 ngày…). Checkout source code của bạn về đúng commit này và kiểm tra xem bug đó có xảy ra không. Nếu vẫn xảy ra, chọn một commit cũ hơn nữa và kiểm tra lại. Nếu bug không xảy ra, bạn thao tác lệnh sau: `git bisect good` Khi đó, commit này sẽ đánh dấu không có bug, gọi commit này là end commit. Quá trình tìm kiếm nhị phân sẽ kiểm tra từ start commit đến end commit.
-* Git bisect sẽ tự động checkout cho bạn vào một commit nằm giữa start và end. Bạn hãy tự kiểm tra có bug xảy ra không. Nếu có thì thao tác lệnh: `git bisect bad` , ngược lại thì `git bisect good`
-* Lặp lại quá trình trên đến khi kết thúc. Bạn sẽ tìm ra được commit bắt đầu gây ra bug.
+- Đầu tiên, bạn cần đảm bảo bạn đang ở commit mới nhất. Bạn vào git bisect thông qua lệnh: `git bisect start.`Tiếp theo, vì commit này bị lỗi, thao tác lệnh tiếp theo: `git bisect bad` . Lúc này, commit mới nhất này được đánh dấu là có bug. Commit này được gọi là start commit.
+- Tiếp theo, bạn hãy chọn một commit trong quá khứ (1 ngày, 10 ngày, 100 ngày…). Checkout source code của bạn về đúng commit này và kiểm tra xem bug đó có xảy ra không. Nếu vẫn xảy ra, chọn một commit cũ hơn nữa và kiểm tra lại. Nếu bug không xảy ra, bạn thao tác lệnh sau: `git bisect good` Khi đó, commit này sẽ đánh dấu không có bug, gọi commit này là end commit. Quá trình tìm kiếm nhị phân sẽ kiểm tra từ start commit đến end commit.
+- Git bisect sẽ tự động checkout cho bạn vào một commit nằm giữa start và end. Bạn hãy tự kiểm tra có bug xảy ra không. Nếu có thì thao tác lệnh: `git bisect bad` , ngược lại thì `git bisect good`
+- Lặp lại quá trình trên đến khi kết thúc. Bạn sẽ tìm ra được commit bắt đầu gây ra bug.
 
 Nhờ git bisect, chúng ta có thể tìm ra commit gây bug trong tích tắc, tiết kiệm rất nhiều thời gian cho lập trình viên.
 
@@ -122,8 +122,8 @@ Lời khuyên: Hãy nhớ xóa branch của mình sau khi merge
 
 Mỗi khi phát triển một tính năng mới hoặc sửa lỗi, chúng ta luôn luôn tạo một branch của riêng mình. Sau khi phát triển tính năng xong hoặc sửa xong, chúng ta tiến hành merge branch của mình vào branch chính của dự án. Sau khi merge thành công, việc xóa branch của mình là việc rất cần thiết vì những lý do sau:
 
-* Không cần phải giữ branch đó của mình nữa
-* Nếu branch đó không bị xóa, nó sẽ hiển thị trong lịch sử commit. Ví dụ:
+- Không cần phải giữ branch đó của mình nữa
+- Nếu branch đó không bị xóa, nó sẽ hiển thị trong lịch sử commit. Ví dụ:
   ![](https://res.cloudinary.com/anhchangtoanhoc97/image/upload/v1697900582/Blogs/Git%20commit/av1juukpoaxnv718sau8.png)
 
 Chúng ta thấy có 2 commit màu vàng và màu đỏ rẽ nhánh trên branch chính của chúng ta. 2 commit này nằm ở 2 branch riêng mà người tạo quên xóa sau khi merge.
