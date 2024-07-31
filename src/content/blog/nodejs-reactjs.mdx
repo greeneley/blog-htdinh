@@ -1,0 +1,19 @@
+---
+heroImage: /src/assets/images/nodejs-45adbe594d.png
+category: React
+description: Phân tích nodejs trong ReactJs
+pubDate: 2024-07-30T17:00:00.000Z
+tags:
+  - Nodejs
+  - React
+title: Có cần NodeJs để chạy React App không ?
+---
+
+ReactJs là một thư viện mạnh mẽ để xây dựng một web application. Một trong những câu hỏi chung khi build một React application là: “có cần sử dụng Nodejs để build một ứng dụng React không? “
+
+***Câu trả lời là:*** tùy thuộc vào môi trường bạn đang build
+
+1. *Môi trường development: *Nodejs rất cần thiết trong giai đoạn này. NodeJs cung cấp một môi trường JS run time để hỗ trợ các tính năng như hot reloading, quản lý module, bundle (ví dụ webpack),… Nếu không sử dụng Nodejs, chúng ta sẽ không thể sử dụng hệ sinh thái tool của Javascript. Điều đó khiến ta rất khó để build ứng dụng
+2. *Môi trường Production:* không cần thiết. React application chỉ đơn gian build các file tĩnh (ví dụ HTML, CSS và Javascript). Những file tĩnh này có thể được triển khai bằng các web server (ví dụ IIS, Apache hoặc Nginx)
+
+Tóm lại, Nodejs rất cần thiết trong giai đoạn phát triền nhờ vào các tool của hệ sinh thái Javascript nhưng không cần thiết khi triển khai trên môi trường production.
