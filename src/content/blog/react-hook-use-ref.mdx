@@ -98,10 +98,11 @@ Tôi từng phát triển một dự án liên quan đến Content Mangement Sys
 	width='100%'
 	height='400'
 	src='https://res.cloudinary.com/anhchangtoanhoc97/video/upload/v1720535570/Blogs/useRef/React_App_-_Google_Chrome_2024-02-14_00-45-42_zbbiwh.mp4'
-	frameborder='0'
 	allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'
-	allowfullscreen
+    autoplay='false'
 />
+
+
 
 ```jsx
 function App() {
@@ -179,7 +180,7 @@ Kết quả chúng ta đạt được:
 	src='https://res.cloudinary.com/anhchangtoanhoc97/video/upload/v1720535567/Blogs/useRef/bandicam_2024-02-14_10-48-38-728_rjsl1z.mp4'
 	frameborder='0'
 	allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'
-	allowfullscreen
+    autoplay='false'
 />
 
 ## 5. Điều lưu ý khi sử dụng ref với DOM
@@ -189,3 +190,4 @@ Khi chúng ta truyền ref trong một component mà component đó trả về c
 Tuy nhiên, nếu chúng ta truyền ref trong một component khác, ví dụ `<MyInput />`, ref sẽ null.
 
 Lý do là vì: React không cho phép một component truy cập vào DOM node của một component khác theo mặc định. Nếu muốn truy cập, ta cần phải “forward” ref. Lúc này cần sử dụng “forwardRef” trong React và ta cần sửa lại component MyInput cho phép nhận ref từ bên ngoài vào để truy cập DOM của nó.
+
