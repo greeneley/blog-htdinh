@@ -1,0 +1,58 @@
+---
+heroImage: /src/assets/images/1_waVLFY0N5M_beN3OTHvD8g.png
+category: Other
+description: GROUP BY và PARITION BY khác nhau như thế nào ?
+pubDate: 2024-08-09T17:00:00.000Z
+tags:
+  - sql
+title: GROUP BY và PARTITION BY trong SQL
+---
+
+Khi làm việc với cơ sở dữ liệu, chúng ta thường cần xử lý và phân tích dữ liệu để rút ra các thông tin hữu ích. SQL cung cấp nhiều công cụ để thực hiện điều này, trong đó hai câu lệnh thường gặp là GROUP BY và PARTITION BY. Cả hai đều đóng vai trò quan trọng trong việc phân loại dữ liệu, nhưng chúng có những điểm khác nhau đáng chú ý. Bài viết này sẽ giúp bạn hiểu rõ hơn về sự khác biệt giữa hai câu lệnh này.
+
+## 1. GROUP BY là gì?
+
+GROUP BY là một câu lệnh SQL được sử dụng để nhóm các hàng trong một bảng dựa trên một hoặc nhiều cột và thực hiện các phép tính tổng hợp như COUNT, SUM, AVG, MAX, và MIN trên từng nhóm.
+
+Ví dụ:
+
+Giả sử chúng ta có một bảng sales như sau:
+
+![](https://res.cloudinary.com/anhchangtoanhoc97/image/upload/v1723287364/Blogs/groupBy/123_k8mdxr.png)
+
+Nếu bạn muốn tính tổng doanh thu cho từng sản phẩm, bạn có thể sử dụng GROUP BY:
+
+```sql
+SELECT product, SUM(quantity * price) AS total_revenue
+FROM sales
+GROUP BY product;
+```
+
+Kết quả sẽ là:
+![](https://res.cloudinary.com/anhchangtoanhoc97/image/upload/v1723287510/Blogs/groupBy/456_ulqqnj.png)
+
+## 2. PARTITION BY là gì?
+
+PARTITION BY là một phần của các hàm cửa sổ trong SQL, cho phép bạn chia dữ liệu thành các nhóm (partition) mà không cần phải tổng hợp dữ liệu như GROUP BY. Điều này có nghĩa là bạn có thể thực hiện các phép tính trên từng phân vùng dữ liệu mà vẫn giữ nguyên các hàng ban đầu trong bảng.
+Ví dụ:
+Tiếp tục với bảng sales, giả sử bạn muốn tính tổng doanh thu cho từng sản phẩm, nhưng bạn muốn giữ nguyên các chi tiết bán hàng gốc:
+
+```sql
+SELECT sale_id, product, quantity, price, SUM(quantity * price) OVER (PARTITION BY product) AS total_revenue
+FROM sales;
+```
+
+Kết quả sẽ là:
+
+![](https://res.cloudinary.com/anhchangtoanhoc97/image/upload/v1723287606/Blogs/groupBy/789_pghpbk.png)
+
+Như bạn thấy, PARTITION BY không tổng hợp dữ liệu mà chỉ tính toán các giá trị trong từng phân vùng, đồng thời giữ nguyên các hàng dữ liệu ban đầu.
+
+## 3. So sánh giữa GROUP BY và PARTITION BY
+
+![](https://res.cloudinary.com/anhchangtoanhoc97/image/upload/v1723287687/Blogs/groupBy/12_lkctmu.png)
+
+## 4. Khi nào nên dùng GROUP BY và khi nào nên dùng PARTITION BY?
+
+* Sử dụng GROUP BY khi: Bạn cần tổng hợp dữ liệu và không cần giữ nguyên các hàng ban đầu. Ví dụ, khi bạn muốn tạo báo cáo tổng hợp về doanh thu, số lượng bán, hoặc giá trị trung bình theo từng nhóm.
+* Sử dụng PARTITION BY khi: Bạn cần tính toán các giá trị trong từng phân vùng mà vẫn muốn giữ nguyên các hàng dữ liệu ban đầu. Ví dụ, khi bạn muốn tính thứ hạng bán hàng trong từng nhóm sản phẩm hoặc tổng cộng các giá trị trong từng phân vùng mà vẫn hiển thị tất cả các hàng.
