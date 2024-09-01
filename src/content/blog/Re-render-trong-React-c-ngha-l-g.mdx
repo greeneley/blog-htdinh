@@ -1,0 +1,101 @@
+---
+heroImage: /src/assets/images/og-why-react-re-renders.png
+category: React
+description: Re-render react
+pubDate: 2024-08-31T17:00:00.000Z
+tags:
+  - react
+title: Re-render trong React có nghĩa là gì
+---
+
+Thành thật mà nói, tôi đã làm việc chuyên nghiệp với React trong nhiều năm mà không thực sự hiểu rõ cách mà quá trình render lại của React hoạt động
+
+Tôi nghĩ điều này cũng đúng với nhiều developer khác. Nếu bạn hỏi một câu hỏi như sau: "Điều gì kích hoạt quá trình re-render trong React? Làm sao để tránh re-render", bạn có thể nhận được một loạt câu trả lời mơ hồ khác nhau.
+
+Khi tham gia các cuộc phỏng vấn, người phỏng vấn rất hay hỏi câu như vậy. Và hầu như chúng ta đều trả lời một cách mơ hồ, chúng ta chỉ đơn giản hiểu: re-render là một component nào đó bị render lại một cách vô ý.
+
+Tuy nhiên, trong bài viết này, chúng ta sẽ tìm hiểu kỹ hơn và làm sao để tránh re-render.
+
+Điều đầu tiên phải nhớ: **mỗi lần render lại trong component đều do thay đổi về state. State thay đổi thì component bị re-render lại.**
+
+Điều lưu ý thứ hai: **khi một component render lại, nó cũng render lại tất cả các component con của nó**
+
+```javascript
+import React from 'react';
+
+function App() {
+  return (
+    <>
+      <Counter />
+      <footer>
+        <p>Copyright 2022 Big Count Inc.</p>
+      </footer>
+    </>
+  );
+}
+
+function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <main>
+      <BigCountNumber count={count} />
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </main>
+  );
+}
+
+function BigCountNumber({ count }) {
+  return (
+    <p>
+      <span className="prefix">Count:</span>
+      {count}
+    </p>
+  );
+}
+
+export default App;
+```
+
+Ví dụ đoạn code sau: khi Counter component render lại thì BigCountNumber cũng bị re-render theo vì BigCountNumber là component con của Counter
+ 
+Làm sao để tránh re-render ?
+
+Để tránh re-render, có 2 phương án:
+
+*Phương án 1:* Tách BigCountNumber ra để nó không phụ thuộc vào Counter. Điều này có nghĩa hệ thống component của chúng ta chỉ có dạng mô hình Tree level 2. Tuy nhiên, trong thực tế, các component của chúng ta luôn phụ thuộc vào nhau, xây thành Tree nhiều level. Phương án này rất khó áp dụng trong thực tế.
+
+*Phương án 2:* 
+
+Sử dụng React.memo() để bọc component con. React.memo() là một higher-order component được sử dụng để tối ưu hiệu suất bằng cách ghi nhớ kết quả render của một component. Nó sẽ so sánh các props của component và chỉ re-render khi có sự thay đổi.
+
+Ví dụ, chúng ta có thể sửa đổi BigCountNumber component như sau:
+
+```javascript
+const BigCountNumber = React.memo(({ count }) => {
+  return (
+    <p>
+      <span className="prefix">Count:</span>
+      {count}
+    </p>
+  );
+});
+```
+
+Bằng cách này, BigCountNumber sẽ chỉ re-render khi prop count thay đổi, ngay cả khi component cha (Counter) re-render. Tuy nhiên, trong tương lai, đội ngũ React sẽ phát triển compiler đủ thông minh để nhận biết component nào render, component nào không. Từ đó sẽ không còn vấn đề re-render nữa.
+
+Ngoài hai phương án đã đề cập, còn có một số cách khác để tránh re-render không cần thiết trong React:
+
+**1.** Sử dụng useReducer hook: Đối với các state phức tạp hoặc các cập nhật state liên quan đến nhau, useReducer có thể giúp quản lý state hiệu quả hơn, từ đó giảm số lần re-render.
+
+**2.** Tối ưu hóa các hàm callback: Sử dụng useCallback hook để memoize các hàm callback, đặc biệt là khi truyền chúng xuống các component con như props.
+
+**3.** Sử dụng lazy loading và code splitting: Kỹ thuật này giúp tải các component khi cần thiết, giảm thời gian render ban đầu và cải thiện hiệu suất tổng thể của ứng dụng.
+
+**4.** Sử dụng Context API một cách thông minh: Tránh đặt quá nhiều state vào context global. Thay vào đó, chia nhỏ context và chỉ cung cấp những giá trị cần thiết cho từng phần của ứng dụng.
+
+**5.** Sử dụng các thư viện quản lý state: Các thư viện như Redux hoặc MobX có thể giúp quản lý state hiệu quả hơn trong các ứng dụng lớn, từ đó giảm số lần re-render không cần thiết.
+
+Tuy nhiên, cần lưu ý rằng việc tối ưu hóa quá mức có thể dẫn đến code phức tạp và khó bảo trì. Trong nhiều trường hợp, việc re-render mặc định của React đã đủ nhanh và hiệu quả. Chỉ nên áp dụng các kỹ thuật tối ưu hóa khi thực sự cần thiết và sau khi đã xác định được vấn đề hiệu suất cụ thể.
