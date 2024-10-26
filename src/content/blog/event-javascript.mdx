@@ -1,0 +1,127 @@
+---
+heroImage: /src/assets/images/image.webp
+category: Other
+description: Phân biệt các event method trong Javascript
+pubDate: 2024-10-25T17:00:00.000Z
+draft: false
+tags:
+  - javascript
+title: 'Event stopImmediatePropagation, preventDefault() và stopPropagation()'
+---
+
+Khi làm việc với các sự kiện (event) trong JavaScript, có ba phương pháp thường xuyên được sử dụng để kiểm soát và ngăn chặn hành vi của chúng là `stopPropagation()`, `preventDefault()`, và `stopImmediatePropagation()`. Trong bài viết này, chúng ta sẽ cùng tìm hiểu cách mỗi phương pháp hoạt động, kèm theo các ví dụ minh họa thực tế.
+
+## 1. stopPropagation()
+
+`stopPropagation()` là phương pháp được sử dụng để ngăn chặn sự lan truyền của event từ phần tử con (children) đến phần tử cha (parent).
+
+**Ví dụ:**
+Giả sử chúng ta có hai thẻ `div`: `div1` và `div2`, trong đó `div1` nằm trong `div2`. Khi người dùng click vào `div1`, sự kiện này theo mặc định sẽ lan truyền lên `div2` và kích hoạt sự kiện click của nó (nếu có). Để ngăn chặn điều này và chỉ xử lý sự kiện ở `div1`, chúng ta sẽ sử dụng `stopPropagation()`.
+
+Video 1: khi không có stop Progagation, chúng ta có thể thấy: event của div2 cũng được kích hoạt khi chúng ta click vào div1
+
+<iframe
+    width='100%'
+    height='400'
+    src='https://res.cloudinary.com/anhchangtoanhoc97/video/upload/v1729912565/Blogs/event/video_1_j3ebut.mp4'
+    frameborder='0'
+    allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'
+    autoplay='false'
+/>
+
+Video 2: khi có stopPropagation, event của div2 không được kích hoạt.
+
+<iframe
+    width='100%'
+    height='400'
+    src='https://res.cloudinary.com/anhchangtoanhoc97/video/upload/v1729912565/Blogs/event/video_2_jfew5y.mp4'
+    frameborder='0'
+    allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'
+    autoplay='false'
+/>
+
+## 2. preventDefault()
+
+`preventDefault()` là phương pháp để ngăn chặn hành vi mặc định của một sự kiện nhất định, ví dụ như chặn link khỏi việc chuyển hướng trang khi người dùng click vào.
+
+**Ví dụ:**
+Khi người dùng click vào một liên kết (thẻ `a`), hành vi mặc định sẽ là mở URL được liên kết. Nếu sử dụng `event.preventDefault()`, hành vi này sẽ bị chặn, và người dùng sẽ không được chuyển đến trang đó.
+
+```jsx
+<a href="https://example.com" id="myLink">Truy cập trang web</a>
+
+<script>
+    document.getElementById("myLink").addEventListener("click", (event) => {
+        event.preventDefault();
+        console.log("Hành vi mở liên kết đã bị chặn");
+    });
+</script>
+```
+
+Sử dụng thực tế của `preventDefault()`:
+
+Một trường hợp thường gặp là khi người dùng click chuột phải để mở menu ngữ cảnh (context menu) tại vị trí cụ thể. Để làm điều này, chúng ta có thể sử dụng `event.preventDefault()` để ngăn chặn menu ngữ cảnh mặc định của trình duyệt và thay thế bằng menu tùy chỉnh của riêng chúng ta
+
+![](https://res.cloudinary.com/anhchangtoanhoc97/image/upload/v1729912033/Blogs/event/event_1_addqvn.png)
+
+```jsx
+document.getElementById("myDiv").addEventListener("contextmenu", (event) => {
+    event.preventDefault(); // Ngăn chặn menu ngữ cảnh mặc định
+    console.log(`Vị trí của chuột: X=${event.clientX}, Y=${event.clientY}`);
+    // Hiển thị menu tùy chỉnh tại vị trí con trỏ
+});
+
+```
+
+![](https://res.cloudinary.com/anhchangtoanhoc97/image/upload/v1729912033/Blogs/event/event_2_da0h5v.png)
+
+## 3. stopImmediatePropagation()
+
+`stopImmediatePropagation()` tương tự như `stopPropagation()`, nhưng mạnh mẽ hơn khi nó có thể ngăn chặn tất cả các xử lý sự kiện khác trên cùng một phần tử, bao gồm cả các sự kiện khác của cùng loại.
+
+**Ví dụ:**
+Giả sử chúng ta có một button với hai sự kiện `click` được đăng ký. Khi người dùng click vào button này, nếu không sử dụng `stopImmediatePropagation()`, cả hai sự kiện sẽ được xử lý. Nhưng nếu sử dụng `stopImmediatePropagation()`, chỉ sự kiện đầu tiên được chạy, và sự kiện thứ hai sẽ bị ngăn chặn.
+
+![](https://res.cloudinary.com/anhchangtoanhoc97/image/upload/v1729912033/Blogs/event/event_3_n9okbv.png)
+
+```jsx
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>This example uses the addEventListener() method to add two click events to the same button. However, the stopImmediatePropagation() method <b>stops</b> the second event handler from being executed.</p>
+
+<p><strong>Note:</strong> The stopImmediatePropagation() method is not supported in IE8 and earlier versions.</p>
+
+<button id="myBtn">Try it</button>
+
+<script>
+function myFunction(event) {
+  alert ("Hello World!");
+  event.stopImmediatePropagation(); // Try to remove me
+}
+
+function someOtherFunction() {
+  alert ("I will not get to say Hello World");
+}
+
+var x = document.getElementById("myBtn");
+x.addEventListener("click", myFunction);
+x.addEventListener("click", someOtherFunction);
+</script>
+
+</body>
+</html>
+```
+
+<iframe
+    width='100%'
+    height='400'
+    src='https://res.cloudinary.com/anhchangtoanhoc97/video/upload/v1729912564/Blogs/event/video_3_pth4gj.mp4'
+    frameborder='0'
+    allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'
+    autoplay='false'
+/>
+
+
+Khi click vào button myBtn , chỉ dòng "Hello World" sẽ được hiển thị ra, còn "I will not get to say Hello World" sẽ bị ngăn không chạy.
