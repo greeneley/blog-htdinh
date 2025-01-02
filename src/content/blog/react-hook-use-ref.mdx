@@ -191,3 +191,4 @@ Tuy nhiên, nếu chúng ta truyền ref trong một component khác, ví dụ `
 
 Lý do là vì: React không cho phép một component truy cập vào DOM node của một component khác theo mặc định. Nếu muốn truy cập, ta cần phải “forward” ref. Lúc này cần sử dụng “forwardRef” trong React và ta cần sửa lại component MyInput cho phép nhận ref từ bên ngoài vào để truy cập DOM của nó.
 
+**Update 02/01/2025**: Từ phiên bản React19, chúng ta có thể truy cập ref như một props của component. Do đó `forwardRef` đã deprecated và trong tương lai sẽ được xóa.
